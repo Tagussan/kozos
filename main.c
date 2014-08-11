@@ -71,7 +71,7 @@ int main (void)
 #endif
   serial_init(0);
   puts("Booting...\n");
-
+//  disp_integer(sys_len_test());
 #if 0
   while (1) monitor_main();
 #else

@@ -45,7 +45,7 @@ CFLAGS = -Wall -march=armv7-m -mthumb -ffreestanding
 CFLAGS += -fno-builtin -nostdinc -nostdlib
 CFLAGS += -I. -I./fm3
 CFLAGS += -g
-#CFLAGS += -Os
+CFLAGS += -Os
 CFLAGS += -DKZLOAD
 
 LFLAGS = -static -T ld.scr -L. 
@@ -72,7 +72,7 @@ $(TARGET) :	$(OBJS)
 		$(CC) -c $(CFLAGS) $<
 
 .o.d :    $<
-		$(OBJDUMP) -d $< > $@
+    $(OBJDUMP) -d $< > $@
 
 $(TARGET).mot :	$(TARGET)
 		$(OBJCOPY) -O srec $(TARGET) $(TARGET).mot

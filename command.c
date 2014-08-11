@@ -128,6 +128,13 @@ static int bootload_main(char *buf)
   return 0;
 }
 
+void bootload_ready(char *p, int size)
+{
+  char buf[16];
+  memcpy(buf, p, size);
+  bootload_main(buf);
+}
+
 int command_main(int argc, char *argv[])
 {
   char *p;
@@ -143,6 +150,7 @@ int command_main(int argc, char *argv[])
 
   if (!wrote) {
     send_write("kzload> "); /* プロンプト表示 */
+    serial_set_recv_enable();
     wrote++;
   }
 
@@ -154,8 +162,9 @@ int command_main(int argc, char *argv[])
     }
     p[size] = '\0';
     wrote = 0;
-
-    bootload_main(p);
+    puts("received");
+    //bootload_main(p);
+    bootload_ready(p,size);
 
     if (!strncmp(p, "echo", 4)) { /* echoコマンド */
       send_write(p + 4); /* echoに続く文字列を出力する */
